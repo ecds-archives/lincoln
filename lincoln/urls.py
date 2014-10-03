@@ -4,7 +4,7 @@ from django.conf.urls import patterns, include, url
 # from django.contrib import admin
 # admin.autodiscover()
 
-from lincoln_app.views import index, overview, contents, searchbox, doc_display, keyword_display, page_image
+from lincoln_app.views import index, overview, contents, searchbox, doc_display, keyword_display, page_image, send_file
 
 urlpatterns = patterns('lincoln_app.views',
     url(r'^$', 'index', name='index'),
@@ -16,6 +16,8 @@ urlpatterns = patterns('lincoln_app.views',
     url(r'^(?P<doc_id>[^/]+)/?keyword$', 'keyword_display', name="keywords"),
     #ex: bullock.001/bullock2
     url(r'^(?P<doc_id>[^/]+)/(?P<image_id>[^/]+)/$', 'page_image', name="pages"),
+    url(r'^(?P<basename>[^/]+)/download$', 'send_file', name='send_file'),
+
     # url(r'^lincoln/', include('lincoln.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

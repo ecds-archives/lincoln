@@ -1,6 +1,10 @@
 # Create your views here.
 import os
+import re
 from urllib import urlencode
+import tempfile, zipfile
+from django.core.servers.basehttp import FileWrapper
+import mimetypes
 
 from django.conf import settings
 from django.shortcuts import render, render_to_response
@@ -159,4 +163,19 @@ def page_image(request, doc_id, image_id):
     #context['nextfigure'] = nextfigure
         
     return render_to_response('page.html', context, context_instance=RequestContext(request)) 
+
+def send_file(request, basename):
+    if basename == 'lincoln_sermons':
+        extension = '.zip'
+    else:
+        extension = '.txt'
+    filepath = 'static/txt/' + re.sub(r'\.001', '', basename) + extension
+    filename  = os.path.join(settings.BASE_DIR, filepath )
+    download_name = basename + extension
+    wrapper      = FileWrapper(open(filename))
+    content_type = mimetypes.guess_type(filename)[0]
+    response     = HttpResponse(wrapper,content_type=content_type)
+    response['Content-Length']      = os.path.getsize(filename)    
+    response['Content-Disposition'] = "attachment; filename=%s"%download_name
+    return response
 
