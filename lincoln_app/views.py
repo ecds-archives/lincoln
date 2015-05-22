@@ -13,7 +13,7 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage, PageNotAnIn
 from django.template import RequestContext
 from django.shortcuts import redirect
 
-from lincoln_app.models import DocTitle, Doc, Bibliography, SourceDescription, DocSearch
+from lincoln_app.models import DocTitle, Doc, Bibliography, SourceDescription, DocSearch, PageImage
 from lincoln_app.forms import DocSearchForm
 
 from eulcommon.djangoextras.http.decorators import content_negotiation
@@ -27,26 +27,23 @@ def overview(request):
    return render(request, 'overview.html')
 
 def contents(request):
-  docs = DocTitle.objects.all()
-  number_of_results = 20
-  context = {}
+    #return_fields = ['author', 'title', 'date', 'pubplace']
+    docs = Doc.objects.only('author', 'title', 'date', 'pubplace', 'xml_id')
+    number_of_results = 20
+    context = {}
+    docs_paginator = Paginator(list(docs), number_of_results)
+    
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+    try:
+        docs_page = docs_paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        docs_page = docs_paginator.page(paginator.num_pages)
 
-  if 'subject' in request.GET:
-    context['subject'] = DocTitle.objects.all()
-
-  docs_paginator = Paginator(list(docs), number_of_results)
-  
-  try:
-    page = int(request.GET.get('page', '1'))
-  except ValueError:
-    page = 1
-  try:
-    docs_page = docs_paginator.page(page)
-  except (EmptyPage, InvalidPage):
-    docs_page = docs_paginator.page(paginator.num_pages)
-
-  context['docs_paginated'] = docs_page
-  return render_to_response('contents.html', context, context_instance=RequestContext(request))
+    context['docs_paginated'] = docs_page
+    return render_to_response('contents.html', context, context_instance=RequestContext(request))
 
 def doc_display(request, doc_id):
   "Display the contents of a single document."
@@ -64,24 +61,25 @@ def doc_display(request, doc_id):
     #return render(request, 'doc_display.html', {'doc': doc, 'format': format.serialize()})
   except DoesNotExist:
     raise Http404
+
 def keyword_display(request, doc_id):
-  "Display the keyword in context a single document."
-  if 'keyword' in request.GET:
-     search_terms = request.GET['keyword']
-     url_params = '?'+urlencode({'keyword': search_terms})
-     highlighter = {'highlight': search_terms}
-  else:
-    url_params = ''
-    highlighter = {}
-  context = {}
-  try:
-    doc = Doc.objects.filter(**highlighter).get(id=doc_id)
-    context['doc'] = doc
-    format = doc.xsl_transform(filename=os.path.join(settings.BASE_DIR, '..', 'lincoln_app', 'xslt', 'kwic.xsl'))
-    context['format'] = format.serialize()
-    return render_to_response('keyword.html', context, context_instance=RequestContext(request))
-  except DoesNotExist:
-    raise Http404
+    "Display the keyword in context a single document."
+    if 'keyword' in request.GET:
+        search_terms = request.GET['keyword']
+        url_params = '?'+urlencode({'keyword': search_terms})
+        highlighter = {'highlight': search_terms}
+    else:
+        url_params = ''
+        highlighter = {}
+    context = {}
+    try:
+        doc = Doc.objects.filter(**highlighter).get(id=doc_id)
+        context['doc'] = doc
+        format = doc.xsl_transform(filename=os.path.join(settings.BASE_DIR, '..', 'lincoln_app', 'xslt', 'kwic.xsl'))
+        context['format'] = format.serialize()
+        return render_to_response('keyword.html', context, context_instance=RequestContext(request))
+    except DoesNotExist:
+        raise Http404
 
 def searchbox(request):
     "Search documents by keyword/title/author/date/place"
@@ -152,16 +150,15 @@ def searchbox(request):
 
 def page_image(request, doc_id, image_id):
     "Display a page; navigate through the pages."
-    return_fields = ['title', 'author', 'prevfigure', 'nextfigure']
-    doc = Doc.objects.only(*return_fields).get(id=doc_id)
+    return_fields = ['nextpage', 'prevpage', 'pageimage', 'pagenum', 'paget__title', 'paget__author']
+    page = PageImage.objects.also(*return_fields).filter(divid=doc_id).get(pageimage=image_id) 
+    print page.prevpage
     context = {}
 
-    context['doc'] = doc
-    #context['doc_id'] = doc_id
-    #context['image_id'] = image_id
-    #context['prevfigure'] = prevfigure
-    #context['nextfigure'] = nextfigure
-        
+    context['page'] = page
+    context['doc_id'] = doc_id
+    context['image_id'] = image_id
+
     return render_to_response('page.html', context, context_instance=RequestContext(request)) 
 
 def send_file(request, basename):

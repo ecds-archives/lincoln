@@ -18,6 +18,7 @@
 <xsl:variable name="numberHeadingsDepth"></xsl:variable>
 <xsl:variable name="graphicsSuffix">.gif</xsl:variable>
 <xsl:variable name="graphicsPrefix">http://beck.library.emory.edu/lincoln/image-content/</xsl:variable>
+<xsl:variable name="siteBase">http://localhost:8000/lincoln/pages</xsl:variable>
 <xsl:variable name="headingNumberSuffix"></xsl:variable>
 <xsl:param name="makePageTable">true</xsl:param>
 <xsl:param name="showFigures">true</xsl:param>

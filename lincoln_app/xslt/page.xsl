@@ -12,53 +12,51 @@
 
 
   <xsl:template match="/">
-    <xsl:apply-templates select="//div"/>
+    <xsl:apply-templates select="//tei:div1"/>
   </xsl:template>
 
-  <xsl:template match="tei:head">
+  <xsl:template match="//field">
     <xsl:apply-templates select="//title"/>
     <xsl:apply-templates select="//author"/>
   </xsl:template>
 
-  <xsl:template match="title">
-    <i>
-      <a>
-        <xsl:attribute name="href">sermon.php?id=<xsl:value-of select="ancestor::div/@xml:id"/></xsl:attribute>
-        <xsl:apply-templates/>
-      </a>
-    </i>
-  </xsl:template>
+  <!-- <xsl:template match="title"> -->
+  <!--   <i> -->
+  <!--     <a> -->
+  <!--       <xsl:attribute name="href">sermon.php?id=<xsl:value-of select="ancestor::div/@xml:id"/></xsl:attribute> -->
+  <!--       <xsl:apply-templates/> -->
+  <!--     </a> -->
+  <!--   </i> -->
+  <!-- </xsl:template> -->
+<!-- link the title to the sermon view -->
 
 
-<xsl:template match="figure">
-  <xsl:variable name="myid"><xsl:value-of select="@entity"/></xsl:variable>
-  <xsl:variable name="position">
-    <xsl:for-each select="//siblings/figure">
-      <xsl:if test="@entity = $myid">
+ <xsl:template match="field/pb">
+   <xsl:variable name="myid"><xsl:value-of select="@facs"/></xsl:variable> -->
+   <xsl:variable name="position"> 
+     <xsl:for-each select="//siblings/pb"> 
+       <xsl:if test="@facs = $myid"> 
         <xsl:value-of select="position()"/>
       </xsl:if>
-    </xsl:for-each> 
+    </xsl:for-each>
   </xsl:variable>
+  <!-- <p class="fullpage"> -->
 
-  <p class="fullpage">
-
-    <xsl:call-template name="pagenav">
-      <xsl:with-param name="position"><xsl:value-of select="$position"/></xsl:with-param>
-    </xsl:call-template>
+  <!--   <xsl:call-template name="pagenav"> -->
+  <!--     <xsl:with-param name="position"><xsl:value-of select="$position"/></xsl:with-param> -->
+  <!--   </xsl:call-template> -->
 
     <xsl:element name="img">
-      <xsl:attribute name="src"><xsl:value-of
-      select="concat($graphicsPrefix, @entity,$graphicsSuffix)"/></xsl:attribute>
+      <xsl:attribute name="src"><xsl:value-of select="concat($graphicsPrefix, @facs)"/></xsl:attribute>
       <!-- display text if images are not turned on -->
-      <xsl:attribute name="alt"><xsl:value-of select="normalize-space(figDesc)"/></xsl:attribute>
+      <xsl:attribute name="alt"><xsl:if test="@n">Page <xsl:value-of select="@n"/></xsl:if></xsl:attribute>
       <!-- show text on mouse-over (in some browsers) -->
-      <xsl:attribute name="title"><xsl:value-of select="normalize-space(figDesc)"/></xsl:attribute>
+      <!-- <xsl:attribute name="title"><xsl:value-of select="normalize-space(figDesc)"/></xsl:attribute> -->
     </xsl:element> <!-- img -->
 
-    <xsl:call-template name="pagenav">
-      <xsl:with-param name="position"><xsl:value-of select="$position"/></xsl:with-param>
-    </xsl:call-template>
-  </p> 
+    <!-- <xsl:call-template name="pagenav"> -->
+    <!--   <xsl:with-param name="position"><xsl:value-of select="$position"/></xsl:with-param> -->
+    <!-- </xsl:call-template> -->   
 </xsl:template>
 
 

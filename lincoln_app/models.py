@@ -51,6 +51,8 @@ class DocTitle(XmlModel, Tei):
     ROOT_NAMESPACES = {'tei' : TEI_NAMESPACE}
     objects = Manager('/tei:TEI')
     text = StringField('tei:text')
+    body = NodeField('tei:text/tei:body', Tei)
+    bibl = NodeListField('tei:text/tei:body/tei:div1/tei:head/tei:bibl', 'self')
     date =  StringListField('tei:text/tei:body/tei:div1/tei:head/tei:bibl/tei:date')
     author =  StringField('tei:text/tei:body/tei:div1/tei:head/tei:bibl/tei:author')
     pubplace = StringListField('tei:text/tei:body/tei:div1/tei:head/tei:bibl/tei:pubPlace')
@@ -101,18 +103,39 @@ class Doc(XmlModel, TeiDiv):
     sermon = NodeField("tei:div1", "self")
 
     objects = Manager("//tei:div1")
-
+    xml_id = StringField('@xml:id')
+    doc_bibl = NodeListField('tei:head/tei:bibl', 'self')
     doct = xmlmap.NodeField('ancestor::tei:TEI', DocTitle)
-    author = StringField('//tei:div1/tei:head/tei:bibl/tei:author')
-    title = StringField('//tei:div1/tei:head/tei:bibl/tei:title')
-    identifier = StringField('//tei:div1/tei:head/tei:bibl/tei:idno')
-    image_id = StringField('//tei:div1//tei:pb/@facs')
-    nextfigure = StringField('following-sibling::tei:div1//tei:pb[1]/@facs')
-    prevfigure = StringField('preceding-sibling::tei:div1//tei:pb[1]/@facs')
+    author = StringField('tei:head/tei:bibl/tei:author')
+    title = StringField('tei:head/tei:bibl/tei:title')
+    date = StringField('tei:head/tei:bibl/tei:date[1]')
+    pubplace = StringField('tei:head/tei:bibl/tei:pubPlace[1]')
+    identifier = StringField('tei:head/tei:bibl/tei:idno')
+    imagefacs = StringListField('//tei:pb/@facs')
+    pagebreak = StringListField('//tei:pb', 'self')
+    pagenum = StringListField('//tei:pb/@n')
+    nextpb = StringField('following-sibling::tei:div1//tei:pb[1]/@facs')
+    prevpb = StringField('preceding-sibling::tei:div1//tei:pb[1]/@facs')
     
     
 class DocSearch(Doc):
    objects = Manager("//tei:div1")
+
+
+
+class PageImage(XmlModel, TeiDiv):
+    ROOT_NAMESPACES = {'tei' : TEI_NAMESPACE}
+
+    objects = Manager('//tei:pb')
+    pageimage = StringField('@facs')
+    pagenum = StringField('@n')
+    divid = NodeField('ancestor::tei:div1/@xml:id', DocTitle)
+    paget = NodeField('ancestor::tei:TEI', DocTitle)
+    siblings = NodeField('ancestor::tei:div1//tei:pb', DocTitle)
+    nextpage = NodeField('following::tei:pb[1]', 'self')
+    #prevpage = NodeField('preceding::tei:pb[1]', 'self')
+    prevpage = NodeField('preceding::tei:pb[1]', 'self')
+    
 
 
 

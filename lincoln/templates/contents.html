@@ -15,40 +15,11 @@
     <thead
   class="tablehead"><tr class="headrow"><td>Name</td><td>Title</td><td>Date</td><td>Place</td></tr></thead>
      {% for doc in docs_paginated.object_list %}
-      <tr class="contentrow"><td class="author"><span class="author">{{doc.author}}</span></td>
-	{% if doc.title|length < 3 %}
-          <td class="sermon">
-          {% if doc.id|first %}
-            <a href="{% url 'sermon' doc.id|first %}">{{ doc.title|first }}</a></td><td>{{doc.date|first}},</td> <td>{{doc.pubplace|first}}</td>
-          {% else %} 
-            <td>{{ doc.title|first }}</td><td>{{doc.date|first}},</td><td> {{doc.pubplace|first}}</td>
-          {% endif %}
+      <tr class="contentrow"><td class="author"><span class="author">{{ doc.author }}</span></td>
 
-	{% else %}
-          <td class="sermon">
-          {% if doc.id.0 %}
-            <a href="{% url 'sermon' doc.id.0 %}">{{ doc.title|first }}</a></td><td>{{doc.date|first}},</td> <td>{{doc.pubplace|first}}</td>
-          {% else %} 
-            <td>{{ doc.title|first }}</td><td>{{doc.date|first}},</td> <td>{{doc.pubplace|first}}</td>
-          {% endif %}
-          </tr>
-          <tr><td/><td class="sermon">
-          {% if doc.id.1 %}
-            <a href="{% url 'sermon' doc.id.1 %}">{{ doc.title.1 }}</a></td><td>{{doc.date.2}},</td> <td>{{doc.pubplace.2}}</td>
-          {% else %} 
-            {{ doc.title.1 }}</td><td>{{doc.date.2}},</td> <td>{{doc.pubplace.2}}</td>
-          {% endif %}
-          </tr>
-          <tr><td/><td class="sermon">
-          {% if doc.id.2 %}
-            <a href="{% url 'sermon' doc.id.2 %}">{{ doc.title.2 }}</a></td><td>{{doc.date.4}},</td> <td>{{doc.pubplace.4}}</td>
-          {% else %} 
-            <td>{{ doc.title.2 }}</td><td>{{doc.date.4}},</td> <td>{{doc.pubplace.4}}</td>
-          {% endif %}
-          </tr>
-	{% endif %}
-      
-    {% endfor %}</table>
+      <td class="sermon"><a href="{% url 'sermon' doc.xml_id %}">{{ doc.title }}</a></td><td>{{ doc.date }},</td> <td> {{ doc.pubplace }}</td>
+      {% endfor %}
+	  </table>
 {% else %}
     <p>Nothing found.</p>
 {% endif %}
@@ -83,8 +54,11 @@
   </tr>
 </table>
 
+<<<<<<< Updated upstream
 <div class="downloads">
   <p><b><a href={% url "send_file" "lincoln_sermons" %}>Download All Sermons as Plain Text</a></b></p>
  </div>
+=======
+>>>>>>> Stashed changes
 
 {% endblock %}

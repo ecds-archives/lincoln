@@ -4,7 +4,11 @@ from django.conf.urls import patterns, include, url
 # from django.contrib import admin
 # admin.autodiscover()
 
+<<<<<<< Updated upstream
 from lincoln_app.views import index, overview, contents, searchbox, doc_display, keyword_display, page_image, send_file
+=======
+from lincoln_app.views import index, overview, contents, searchbox, doc_display, page_image, keyword_display
+>>>>>>> Stashed changes
 
 urlpatterns = patterns('lincoln_app.views',
     url(r'^$', 'index', name='index'),

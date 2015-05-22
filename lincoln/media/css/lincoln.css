@@ -17,6 +17,7 @@ div.content
 
 h1 { font-family: "Book Antiqua", serif; color: #660000; background-color:inherit;}
 h2 { font-family: "Book Antiqua", serif; color: #000033; background-color:inherit; }
+h2.imagepagetitle { font-family: "Book Antiqua", serif; color: #000033; background-color:inherit; text-align:center;}
 span.star {font-weight: bold;}
 span.author { font-weight: bold; font-size:125%;}
 li.sermon { list-style-type: circle; padding-left: 15px; text-indent: -15px; }

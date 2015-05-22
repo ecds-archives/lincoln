@@ -1,21 +1,47 @@
 {% extends "base.html" %}
 
-{% block pagetitle %} Sermon: {{doc.author}} - {{doc.title}} {% endblock %}
+{% block pagetitle %} Sermon: {{author}} {% endblock %}
 
 {% block content %}
 <div class="content">
 
-{% if pages %}
-  {% if format %}
-    {{ format|safe }}
-  {% else %}
-    <p>No format</p>
+{% if page %}
+  <h2 class="imagepagetitle"><a href="{% url 'sermon' doc_id %}">{{page.paget.title}}</a> {% if page.paget.pagenum %}- page {{page.paget.pagenum}}{% endif %}</h2>
+  <p>
+  {% if page.pageimage %}
+  <img src="http://beck.library.emory.edu/lincoln/image-content/{{ page.pageimage }}" {% if page.pagenum %} alt="page {{ page.pagenum }} of sermon" {% endif %}/>
+  {% else %}Page {{ page.pagenum }} is blank. 
   {% endif %}
-{% else %}
+  </p>
+  {# Need to change this image source when we know where images will be stored #}  
+  {% else %}
     <p>Nothing found</p>
 {% endif %}
 
 <p class="clear">&nbsp;</p>
 </div>
 
+<div class ="pagination">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="150">
+    &nbsp;
+    {#{% if prevpage %} #}
+        <a href="{% url 'pages' doc_id page.prevpage.pageimage %}">{{ page }}[ &nbsp;&lt;&lt; Previous page &nbsp;]</a> {{ page.prevpage }} {# for testing #}
+    {# {% endif %} #}
+    </td>
+    
+     <td align="center">
+      [&nbsp;&nbsp; Current page: {{ page.pagenum }}&nbsp;&nbsp;]
+     </td>
+  
+      <td width="150" align="right">
+	{# % if nextpage % #}
+          <a href="{# % url 'pages' doc_id page.nextpage % #}">[ &nbsp;Next page &gt;&gt;&nbsp; ]</a> {{ page.nextpage }} {# for testing #}
+      {# % endif % #}
+      &nbsp;
+      </td>
+  </tr>
+</table>
+</div>
 {% endblock %}
