@@ -50,17 +50,17 @@ def doc_display(request, doc_id):
   return_fields = ['doct__publisher', 'doct__rights', 'doct__publication_date', 'doct__relation', 'doct__source', 'doct__project_desc']
   context = {}
   try:
-    doc = Doc.objects.also(*return_fields).get(id=doc_id)
-    context['doc'] = doc
-    print doc.serialize()
-    format = doc.xsl_transform(filename=os.path.join(settings.BASE_DIR, '..', 'lincoln_app', 'xslt', 'sermon.xsl'))
-    #print format
-    context['format'] = format.serialize()
-    #print format.serialize()
-    return render_to_response('doc_display.html', context, context_instance=RequestContext(request))
-    #return render(request, 'doc_display.html', {'doc': doc, 'format': format.serialize()})
+      doc = Doc.objects.also(*return_fields).get(id=doc_id)
+      context['doc'] = doc
+      print doc.serialize()
+      format = doc.xsl_transform(filename=os.path.join(settings.BASE_DIR, '..', 'lincoln_app', 'xslt', 'sermon.xsl'))
+      #print format
+      context['format'] = format.serialize()
+      #print format.serialize()
+      return render_to_response('doc_display.html', context, context_instance=RequestContext(request))
+      #return render(request, 'doc_display.html', {'doc': doc, 'format': format.serialize()})
   except DoesNotExist:
-    raise Http404
+      raise Http404
 
 def keyword_display(request, doc_id):
     "Display the keyword in context a single document."
@@ -73,7 +73,7 @@ def keyword_display(request, doc_id):
         highlighter = {}
     context = {}
     try:
-        doc = Doc.objects.filter(**highlighter).get(id=doc_id)
+        doc = Doc.objects.filter(**highlighter).get(id=doc_id).filter(xml_id=doc_id).get(imagefacs=imageid)
         context['doc'] = doc
         format = doc.xsl_transform(filename=os.path.join(settings.BASE_DIR, '..', 'lincoln_app', 'xslt', 'kwic.xsl'))
         context['format'] = format.serialize()
@@ -152,15 +152,16 @@ def page_image(request, doc_id, image_id):
     "Display a page; navigate through the pages."
     return_fields = ['nextpage', 'prevpage', 'pageimage', 'pagenum', 'paget__title', 'paget__author']
     page = PageImage.objects.also(*return_fields).filter(divid=doc_id).get(pageimage=image_id) 
-    print page.prevpage
     context = {}
-
-    context['page'] = page
-    context['doc_id'] = doc_id
-    context['image_id'] = image_id
-
-    return render_to_response('page.html', context, context_instance=RequestContext(request)) 
-
+    print page.serialize() #debug:show in console
+    try:
+        context['page'] = page
+        context['doc_id'] = doc_id
+        context['image_id'] = image_id
+        return render_to_response('page.html', context, context_instance=RequestContext(request)) 
+    except DoesNotExist:
+        raise Http404
+    #Boardman (3 sermons in 1 doc) is a problem here: the pages continue so we get DoesNotExist for page 27, which is in the next section. How to gracefully return the reader to the sermon?
 def send_file(request, basename):
     if basename == 'lincoln_sermons':
         extension = '.zip'
@@ -175,4 +176,11 @@ def send_file(request, basename):
     response['Content-Length']      = os.path.getsize(filename)    
     response['Content-Disposition'] = "attachment; filename=%s"%download_name
     return response
+
+#def oai(request, verb)
+#   "Display any one of the verbs of OAI: Identify, ListRecords, GetRecord, ListIdentifiers, ListMetadataFormats, ListSets"
+#  verb = verb.GET #cleandata?
+#  verblist = ['Identify', 'ListRecords', 'ListIdentfiers', 'GetRecord', 'ListSets', 'ListMetadataFormats']
+#  if verb in verb list:
+
 

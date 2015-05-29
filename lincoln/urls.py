@@ -4,11 +4,9 @@ from django.conf.urls import patterns, include, url
 # from django.contrib import admin
 # admin.autodiscover()
 
-<<<<<<< Updated upstream
-from lincoln_app.views import index, overview, contents, searchbox, doc_display, keyword_display, page_image, send_file
-=======
-from lincoln_app.views import index, overview, contents, searchbox, doc_display, page_image, keyword_display
->>>>>>> Stashed changes
+
+from lincoln_app.views import index, overview, contents, searchbox, doc_display, keyword_display, page_image, send_file#, oai
+
 
 urlpatterns = patterns('lincoln_app.views',
     url(r'^$', 'index', name='index'),
@@ -21,6 +19,7 @@ urlpatterns = patterns('lincoln_app.views',
     #ex: bullock.001/bullock2
     url(r'^(?P<doc_id>[^/]+)/(?P<image_id>[^/]+)/$', 'page_image', name="pages"),
     url(r'^(?P<basename>[^/]+)/download$', 'send_file', name='send_file'),
+#url(r'^oai[^/]+', 'oai', name='oai'),
 
     # url(r'^lincoln/', include('lincoln.foo.urls')),
 

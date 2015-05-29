@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block meta%}
-{# embed Dublin Core metadata for this finding aid in the html header #}
+{# embed Dublin Core metadata for this document in the html header #}
   {% with doc  as dc_fields %}
     {% include "dc_meta.html" %}
   {% endwith %}

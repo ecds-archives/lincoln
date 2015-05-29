@@ -6,14 +6,17 @@
 <div class="content">
 
 {% if page %}
-  <h2 class="imagepagetitle"><a href="{% url 'sermon' doc_id %}">{{page.paget.title}}</a> {% if page.paget.pagenum %}- page {{page.paget.pagenum}}{% endif %}</h2>
+  <h2 class="imagepagetitle">{{page.paget.author}}, <a href="{% url 'sermon' doc_id %}{% if page.pagenum %}#page{{page.pagenum}}{% endif %}">{{page.paget.title}}</a> {% if page.pagenum %} - page {{page.pagenum}}{% endif %}</h2>
   <p>
   {% if page.pageimage %}
-  <img src="http://beck.library.emory.edu/lincoln/image-content/{{ page.pageimage }}" {% if page.pagenum %} alt="page {{ page.pagenum }} of sermon" {% endif %}/>
-  {% else %}Page {{ page.pagenum }} is blank. 
-  {% endif %}
+  {% if page.pageimage == None %}
+  Page {{ page.pagenum }} is blank.
+   {% else %}
+    <img src="http://beck.library.emory.edu/lincoln/image-content/{{ page.pageimage }}" {% if page.pagenum %} alt="page {{ page.pagenum }} of sermon" {% endif %}/>
+   {% endif %}
+   {% endif %}
   </p>
-  {# Need to change this image source when we know where images will be stored #}  
+  {# Need to change this image source when we know where images will be stored. Set in Settings? #} 
   {% else %}
     <p>Nothing found</p>
 {% endif %}
@@ -22,23 +25,49 @@
 </div>
 
 <div class ="pagination">
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="80%" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td width="150">
+    <td width="120">
     &nbsp;
-    {#{% if prevpage %} #}
-        <a href="{% url 'pages' doc_id page.prevpage.pageimage %}">{{ page }}[ &nbsp;&lt;&lt; Previous page &nbsp;]</a> {{ page.prevpage }} {# for testing #}
-    {# {% endif %} #}
+    {% if page.prevpage %}  {# Still need to deal with blank pages? Commented these out in Boardman. Makes the code cleaner... #}
+      {% if page.prevpage.pageimage %}
+	{% if page.prevpage.pageimage != "boardman26.jpg" %}
+	{% if page.prevpage.pageimage != "boardman45.jpg" %}
+        <a href="{% url 'pages' doc_id page.prevpage.pageimage %}">[&nbsp;{{ page.prevpage.pagenum }} &nbsp;&lt;&lt; Previous page &nbsp;]</a>
+      {% else %}
+        <a href="{% url 'sermon' doc_id %}">Back to sermon</a>
+      {% endif %}
+            {% else %}
+        <a href="{% url 'sermon' doc_id %}">Back to sermon</a>
+      {% endif %}
+            {% else %}
+        <a href="{% url 'sermon' doc_id %}">Back to sermon</a>
+      {% endif %}
+      {% endif %}
     </td>
     
      <td align="center">
-      [&nbsp;&nbsp; Current page: {{ page.pagenum }}&nbsp;&nbsp;]
+      {% if page.pagenum %}[&nbsp;&nbsp; Current page: {{ page.pagenum }}&nbsp;&nbsp;]{% endif %}
      </td>
   
-      <td width="150" align="right">
-	{# % if nextpage % #}
-          <a href="{# % url 'pages' doc_id page.nextpage % #}">[ &nbsp;Next page &gt;&gt;&nbsp; ]</a> {{ page.nextpage }} {# for testing #}
-      {# % endif % #}
+      <td width="120" align="right">
+	{% if page.nextpage %}
+	      {% if page.nextpage.pageimage %}
+	{% if page.nextpage.pageimage != "boardman27.jpg" %}
+	{% if page.nextpage.pageimage != "boardman47.jpg" %}
+	<a href="{% url 'pages' doc_id page.nextpage.pageimage %}">[ &nbsp;Next page &gt;&gt;&nbsp;{{ page.nextpage.pagenum }}]</a>
+	{% else %}
+	        <a href="{% url 'sermon' doc_id %}">Back to sermon</a>
+      {% endif %}
+	{% else %}
+	        <a href="{% url 'sermon' doc_id %}">Back to sermon</a>
+
+      {% endif %}
+		{% else %}
+	        <a href="{% url 'sermon' doc_id %}">Back to sermon</a>
+
+	{% endif %}
+	{% endif %}
       &nbsp;
       </td>
   </tr>

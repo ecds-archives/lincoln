@@ -1,0 +1,26 @@
+{% extends "oai_base.html" %}
+{% block request %}
+<request
+verb="Identify">http://oai.library.emory.edu/southernchanges</request>{#sample content; set in settings? check with Laura A or maybe RSK for actual url  #}
+{% endblock %}
+{% block content %}
+{# this is sample content #}
+<Identify xmlns:default="http://www.openarchives.org/OAI/2.0/oai-identifier">
+<repositoryName xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">Southern Changes Digital Archive @Emory University</repositoryName>
+<baseURL>http://oai.library.emory.edu/southernchanges</baseURL>
+<protocolVersion>2.0</protocolVersion>
+<adminEmail>beckctr@emory.edu</adminEmail>
+<earliestDatestamp>1970-01-01T00:00:00Z</earliestDatestamp>
+<deletedRecord>no</deletedRecord>
+<granularity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">YYYY-MM-DDThh:mm:ssZ</granularity>
+<compression>gzip</compression>
+<description>
+<default:oai-identifier xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai-identifier http://www.openarchives.org/OAI/2.0/oai-identifier.xsd" xmlns="http://www.openarchives.org/OAI/2.0/oai-identifier" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<default:scheme>oai</default:scheme>
+<default:repositoryIdentifier>oai.library.emory.edu:southernchanges</default:repositoryIdentifier>
+<default:delimiter>:</default:delimiter>
+<default:sampleIdentifier>oai:oai.library.emory.edu:southernchanges/anIdentifier</default:sampleIdentifier>
+</default:oai-identifier>
+</description>
+</Identify>
+{% endblock %}

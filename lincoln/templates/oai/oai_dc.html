@@ -1,0 +1,14 @@
+{% comment %} Output Dublin Core metadata for the OAI verb ListRecords, GetRecord
+A dictionary with dc_fields with dc field names for keys and values
+See also dc_meta.html
+{% endcomment %}
+
+<dc:title>{{dc_fields.title}}</dc:title>
+<dc:creator>{{dc_fields.author}}</dc:creator>
+<dc:publisher>{{dc_fields.doct.publisher}}</dc:publisher>
+<dc:date>{{dc_fields.doct.publication_date}}</dc:date>
+<dc:rights>{{dc_fields.doct.rights}}</dc:rights>
+<dc:source>{{dc_fields.doct.source}}</dc:source>
+<dc:relation>{{dc_fields.doct.relation}}</dc:relation>
+<dc:description>{{dc_fields.doct.project_desc}}</dc:description>
+<dc:identifier>{{dc_fields.identifier}}</dc:identifier>

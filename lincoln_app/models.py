@@ -114,8 +114,8 @@ class Doc(XmlModel, TeiDiv):
     imagefacs = StringListField('//tei:pb/@facs')
     pagebreak = StringListField('//tei:pb', 'self')
     pagenum = StringListField('//tei:pb/@n')
-    nextpb = StringField('following-sibling::tei:div1//tei:pb[1]/@facs')
-    prevpb = StringField('preceding-sibling::tei:div1//tei:pb[1]/@facs')
+    #nextpb = StringField('following::tei:div1//tei:pb[1]/@facs')
+    #prevpb = StringField('preceding::tei:div1//tei:pb[1]/@facs')
     
     
 class DocSearch(Doc):
@@ -130,10 +130,8 @@ class PageImage(XmlModel, TeiDiv):
     pageimage = StringField('@facs')
     pagenum = StringField('@n')
     divid = NodeField('ancestor::tei:div1/@xml:id', DocTitle)
-    paget = NodeField('ancestor::tei:TEI', DocTitle)
-    siblings = NodeField('ancestor::tei:div1//tei:pb', DocTitle)
+    paget = NodeField('ancestor::tei:TEI//tei:div1', Doc)
     nextpage = NodeField('following::tei:pb[1]', 'self')
-    #prevpage = NodeField('preceding::tei:pb[1]', 'self')
     prevpage = NodeField('preceding::tei:pb[1]', 'self')
     
 

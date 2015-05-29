@@ -1,0 +1,58 @@
+{% extends "oai_base.html"  %}
+{% block request %}
+<request verb="ListRecords" metadataPrefix="oai_dc">http://oai.library.emory.edu/southernchanges</request>
+{% endblock %}
+{% block content %}
+<ListRecords xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<record xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xq="http://metalab.unc.edu/xql" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/">
+<header>
+<identifier>oai:oai.library.emory.edu:southernchanges/sc01-1_002</identifier>
+<datestamp>2008-05-13T10:30:34-04:00</datestamp>
+</header>
+<metadata>
+<oai_dc:dc>
+<dc:title>INTERCHANGE A New Magazine: Our Creed and Hopes</dc:title>
+<dc:creator>Suitts, Steve</dc:creator>
+<dc:identifier>http://pid.emory.edu/ark:/25593/140hc</dc:identifier>
+<dc:relation>Southern Changes.  Volume 1,  Number 1, September 1978. </dc:relation>
+<dc:relation>http://beck.library.emory.edu/southernchanges/article-list.php?id=sc01-1_001</dc:relation>
+<dc:contributor>Southern Regional Council</dc:contributor>
+<dc:contributor>Lewis H. Beck Center</dc:contributor>
+<dc:publisher>Lewis H. Beck Center</dc:publisher>
+<dc:rights>©2004 Emory University. Permission is granted to download, transmit, or otherwise reproduce, distribute or display the contributions to the work claimed by Emory University for non-profit educational purposes, provided this header is included in its entirety. For inquiries about commercial uses, contact either: Southern Changes Digital Archive or Lewis H. Beck Center for Electronic collections and services, Emory University, Atlanta, Georgia 30322</dc:rights>
+<dc:relation>Southern Changes Digital Archive</dc:relation>
+<dc:relation>http://beck.library.emory.edu/southernchanges</dc:relation>
+<dc:source>Southern Changes. Atlanta, GA:  Southern Regional Council, Volume 1, Number 1, September 1978. </dc:source>
+<dc:type>Text</dc:type>
+<dc:format>text/xml</dc:format>
+</oai_dc:dc>
+</metadata>
+</record>
+<record xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xq="http://metalab.unc.edu/xql" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/">
+<header>
+<identifier>oai:oai.library.emory.edu:southernchanges/sc01-1_003</identifier>
+<datestamp>2008-05-13T10:30:34-04:00</datestamp>
+</header>
+<metadata>
+<oai_dc:dc>
+<dc:title>The Burden of the South and Nation In Another Political Year</dc:title>
+<dc:creator>Suitts, Steve</dc:creator>
+<dc:identifier>http://pid.emory.edu/ark:/25593/140jh</dc:identifier>
+<dc:relation>Southern Changes.  Volume 1,  Number 1, September 1978. </dc:relation>
+<dc:relation>http://beck.library.emory.edu/southernchanges/article-list.php?id=sc01-1_001</dc:relation>
+<dc:contributor>Southern Regional Council</dc:contributor>
+<dc:contributor>Lewis H. Beck Center</dc:contributor>
+<dc:publisher>Lewis H. Beck Center</dc:publisher>
+<dc:rights>©2004 Emory University. Permission is granted to download, transmit, or otherwise reproduce, distribute or display the contributions to the work claimed by Emory University for non-profit educational purposes, provided this header is included in its entirety. For inquiries about commercial uses, contact either: Southern Changes Digital Archive or Lewis H. Beck Center for Electronic collections and services, Emory University, Atlanta, Georgia 30322</dc:rights>
+<dc:relation>Southern Changes Digital Archive</dc:relation>
+<dc:relation>http://beck.library.emory.edu/southernchanges</dc:relation>
+<dc:source>Southern Changes. Atlanta, GA:  Southern Regional Council, Volume 1, Number 1, September 1978. </dc:source>
+<dc:type>Text</dc:type>
+<dc:format>text/xml</dc:format>
+</oai_dc:dc>
+</metadata>
+</record>
+.
+.
+.
+{# need resumption token at end to tell where to start again #}
