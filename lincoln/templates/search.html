@@ -43,7 +43,7 @@
           <tr xmlns:tei="http://www.tei-c.org/ns/1.0">
 	    <td>{{forloop.counter|add:docs_paginated.start_index|add:-1}}.</td><td>
           {% if doc.id.0 %}
-            <a href="{% url 'doc_display' doc.id.0 %}">{{ doc.title.0 }}</a>
+            <a href="{% url 'sermon' doc.id.0 %}">{{ doc.title.0 }}</a>
 	  {% else %}
 	    {{ doc.title.0 }}
 	  {% endif %}
@@ -51,7 +51,7 @@
           <tr xmlns:tei="http://www.tei-c.org/ns/1.0">
 	    <td>{{forloop.counter|add:docs_paginated.start_index|add:-1}}.</td><td>
           {% if doc.id.1 %}
-            <a href="{% url 'doc_display' doc.id.1 %}">{{ doc.title.1 }}</a>
+            <a href="{% url 'sermon' doc.id.1 %}">{{ doc.title.1 }}</a>
 	  {% else %}
 	    {{ doc.title.1 }}
 	  {% endif %}
@@ -59,7 +59,7 @@
           <tr xmlns:tei="http://www.tei-c.org/ns/1.0">
 	    <td>{{forloop.counter|add:docs_paginated.start_index|add:-1}}.</td><td>
           {% if doc.id.0 %}
-            <a href="{% url 'doc_display' doc.id.2 %}">{{ doc.title.2 }}</a>
+            <a href="{% url 'sermon' doc.id.2 %}">{{ doc.title.2 }}</a>
 	  {% else %}
 	    {{ doc.title.2 }}
 	  {% endif %}
