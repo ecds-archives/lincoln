@@ -17,7 +17,7 @@
      {% for doc in docs_paginated.object_list %}
       <tr class="contentrow"><td class="author"><span class="author">{{ doc.author }}</span></td>
 
-      <td class="sermon"><a href="{% url 'sermon' doc.xml_id %}">{{ doc.title }}</a></td><td>{{ doc.date }},</td> <td> {{ doc.pubplace }}</td>
+      <td class="sermon"><a href="{% url 'sermon' doc.xml_id %}">{{ doc.title }}</a></td><td>{{ doc.date }}</td> <td> {{ doc.pubplace }}</td>
       {% endfor %}
 	  </table>
 {% else %}
