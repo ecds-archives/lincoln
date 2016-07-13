@@ -68,7 +68,7 @@ change the margin-top property in index.css for div.nav p to lower than 2.25 in 
         <a href="http://www.emory.edu/">Emory University</a>
     </p>
     <p id="indexsearchbox">
-    <form name="keywordsearch" action="{# {% url 'search' %} #}" method="get"><p class="searchbox"><b>Search:</b><input id="key" type="text" size="20" name="keyword"><input id="go" type='submit' size="20" value='Go'></p></form>
+    <form name="keywordsearch" action="{% url 'search' %}" method="get"><p class="searchbox"><b>Search:</b><input id="key" type="text" size="20" name="keyword"><input id="go" type='submit' size="20" value='Go'></p></form>
     </p>
 
 </div>
